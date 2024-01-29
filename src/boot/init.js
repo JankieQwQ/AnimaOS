@@ -25,3 +25,19 @@ fs.readdir('.', (err, files) => {
         });
     }
 });
+// 1.Memory Check
+const os = require('os');
+const totalMemory = os.totalmem();
+const freeMemory = os.freemem();
+const i = freeMemory * 0.4; // freeMemory / 2 * 50% 
+var test = new Array()
+console.log(`Total Memory: ${totalMemory / 1024 / 1024} MB`);
+console.log(`Free Memory: ${freeMemory / 1024 / 1024} MB`);
+try{
+    for(var x = 0;x < i;i++){
+        test.push(0)
+    }
+    delete test
+}catch(err){
+    console.log(`Memory error:${err}.`)
+}
