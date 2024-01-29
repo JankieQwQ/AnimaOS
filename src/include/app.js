@@ -20,4 +20,12 @@ class app{
             return false;
         });
     }
+    run(this){
+        try{
+            var task = require('./app/' + this.name);
+            task.main();
+        }catch(err){
+            console.error(`ERROR:${err}.`);
+        }
+    }
 }
