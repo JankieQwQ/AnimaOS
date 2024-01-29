@@ -4,15 +4,20 @@ class app{
         this.url = url;
         this.id = id;
     }
-
-    download(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (request.readyState === 4){
-                if (request.status === 200) {
-                    // Todo: dump request.responseText
-                }
-                else{return false;}
-            }
+    download(this) {
+        const fs = require('fs');
+        const https = require('https');
+        const file = fs.createWriteStream('./app/' + this.name);
+        const request = https.get(this.url + '/index.js', function(response) {
+            response.pipe(file);
+            file.on('finish', function() {
+                file.close(function() {
+                    return true;
+                });
+            });
+        }).on('error', function(err) {
+            fs.unlink('./app/' + this.name);
+            return false;
+        });
     }
 }
