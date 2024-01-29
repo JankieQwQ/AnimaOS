@@ -3,7 +3,7 @@ try {
     console.log(process.versions)
 }
 catch(err) {
-    alert('AnimaOS 必须在 NodeJS Runtime 拉起.')
+    alert('AnimaOS must be pulled up at the NodeJS Runtime.')
     window.close()
 }
 
