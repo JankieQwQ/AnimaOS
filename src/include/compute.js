@@ -21,8 +21,8 @@ http.createServer(function (req, res) {
             res.end(result.toString());
         });
         } else {
-            res.writeHead(404, { 'Content-Type': 'text/plain' });
-            res.end('Not Found');
-        }
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('200');
+    }
 }).listen(3000);
 
