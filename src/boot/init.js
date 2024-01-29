@@ -41,3 +41,6 @@ try{
 }catch(err){
     console.log(`Memory error:${err}.`)
 }
+// 2. Boot
+const version = '0.1.0'
+console.log(`Anima OS v${version}, On Github: https://github.com/JankieQwQ/AnimaOS`)
