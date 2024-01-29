@@ -1,28 +1,35 @@
 const http = require('http');
 const querystring = require('querystring');
 
-http.createServer(function (req, res) {
+const server = http.createServer((req, res) => {
     if (req.url === '/compute' && req.method === 'POST') {
         let body = '';
-            req.on('data', chunk => {
+        req.on('data', chunk => {
             body += chunk.toString();
         });
         req.on('end', () => {
-            const script = querystring.parse(body).script;
-            let result;
-            try {
-                result = eval(script);
-            } catch (err) {
-                res.writeHead(400, { 'Content-Type': 'text/plain' });
-                res.end(`Error: ${err.message}`);
-                return;
-            }
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end(result.toString());
+            handleComputeRequest(body, res);
         });
-        } else {
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('200');
+    } else {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('200');
     }
-}).listen(3000);
+});
 
+function handleComputeRequest(body, res) {
+    const script = querystring.parse(body).script;
+    let result;
+    try {
+        result = eval(script);
+        sendResponse(res, 200, result.toString());
+    } catch (err) {
+        sendResponse(res, 400, `Error: ${err.message}`);
+    }
+}
+
+function sendResponse(res, statusCode, message) {
+    res.writeHead(statusCode, { 'Content-Type': 'text/plain' });
+    res.end(message);
+}
+
+server.listen(3000);
