@@ -3,6 +3,7 @@ class app{
         this.name = name;
         this.url = url;
         this.id = id;
+        this.download = false;
     }
     download(this) {
         const fs = require('fs');
@@ -12,6 +13,7 @@ class app{
             response.pipe(file);
             file.on('finish', function() {
                 file.close(function() {
+                    this.download = true;
                     return true;
                 });
             });
@@ -22,10 +24,14 @@ class app{
     }
     run(this){
         try{
-            var task = require('./app/' + this.name);
+            if(this.download){
+                window.open(this.url);
+            }else{
+                var task = require('./app/' + this.name);
+            }
             task.main();
         }catch(err){
-            console.error(`ERROR:${err}.`);
+            console.error(`App Error:${err}.`);
         }
     }
 }
