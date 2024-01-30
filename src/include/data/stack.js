@@ -31,6 +31,6 @@ class Stack {
 	}
 
 	print() {
-		console.log(this.items.toString());
+		return this.items.toString();
 	}
 }
